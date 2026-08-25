@@ -1,6 +1,8 @@
 package com.damoi.habitaciones.entity;
 
 
+import com.damoi.commons.enums.EstadoHabitacion;
+import com.damoi.commons.enums.EstadoRegistro;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,7 +41,7 @@ public class Habitacion {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Enumerated(EnumType.STRING)
     @Column(name = "ESTADO_INICIAL", nullable = false)
-    private EstadoInicial estadoInicial ;
+    private EstadoHabitacion estadoInicial ;
 
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Enumerated(EnumType.STRING)
@@ -48,24 +50,32 @@ public class Habitacion {
 
     public void validarDatos(Double numero, String Tipo, BigDecimal precio,
                              Integer capacidad) {
-        if (this.numero == null || this.numero <= 0) {
+        if (numero == null || this.numero <= 0) {
             throw new IllegalArgumentException("El número de habitación debe ser mayor a 0");
         }
-        if (this.tipo == null || this.tipo.trim().isEmpty()) {
+        if (tipo == null || this.tipo.trim().isEmpty()) {
             throw new IllegalArgumentException("El tipo de habitación es obligatorio");
         }
-        if (this.precio == null || this.precio.compareTo(BigDecimal.ZERO) <= 0) {
+        if (precio == null || this.precio.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("El precio debe ser mayor a 0");
         }
-        if (this.capacidad == null || this.capacidad <= 0) {
+        if (capacidad == null || this.capacidad <= 0) {
             throw new IllegalArgumentException("La capacidad debe ser mayor a 0");
         }
-        if (this.estadoInicial == null) {
-            throw new IllegalArgumentException("El estado inicial es obligatorio");
-        }
-        if (this.estadoRegistro == null) {
-            throw new IllegalArgumentException("El estado de registro es obligatorio");
-        }
+    }
+
+    public void actualizar(Double numero, String Tipo, BigDecimal precio,
+                           Integer capacidad) {
+        validarDatos( numero, Tipo,  precio,
+                 capacidad);
+        this.numero = numero;
+        this.tipo = tipo.trim();
+        this.precio = precio;
+        this.capacidad = capacidad;
+    }
+
+    public void setEstatusEliminado() {
+        estadoRegistro = EstadoRegistro.ELIMINADO;
     }
 
 }
