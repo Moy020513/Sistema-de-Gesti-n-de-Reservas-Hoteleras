@@ -1,6 +1,7 @@
 package com.damoi.commons.exceptions;
 
-import com.jorged.commons.dto.CustomErrorResponse;
+
+import com.damoi.commons.dto.CustomErrorResponse;
 import feign.FeignException;
 import feign.RetryableException;
 import jakarta.validation.ConstraintViolationException;
