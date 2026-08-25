@@ -27,7 +27,7 @@ public class Habitacion {
     private Long id;
 
     @Column(name = "NUMERO", nullable = false)
-    private Double numero;
+    private Integer numero;
 
     @Column(name = "TIPO", nullable = false, length = 50)
     private String tipo;
@@ -48,7 +48,7 @@ public class Habitacion {
     @Column(name = "ESTADO_REGISTRO", nullable = false)
     private EstadoRegistro estadoRegistro;
 
-    public void validarDatos(Double numero, String Tipo, BigDecimal precio,
+    public void validarDatos(Integer numero, String Tipo, BigDecimal precio,
                              Integer capacidad) {
         if (numero == null || this.numero <= 0) {
             throw new IllegalArgumentException("El número de habitación debe ser mayor a 0");
@@ -64,7 +64,7 @@ public class Habitacion {
         }
     }
 
-    public void actualizar(Double numero, String Tipo, BigDecimal precio,
+    public void actualizar(Integer numero, String Tipo, BigDecimal precio,
                            Integer capacidad) {
         validarDatos( numero, Tipo,  precio,
                  capacidad);

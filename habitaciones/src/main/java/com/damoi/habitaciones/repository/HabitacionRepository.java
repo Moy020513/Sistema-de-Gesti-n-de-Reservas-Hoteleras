@@ -13,7 +13,7 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
 
     List<Habitacion> findByEstadoRegistro(EstadoRegistro estadoRegistro);
 
-    boolean existsByNumeroIgnoreCase(Double numero);
+    boolean existsByNumeroIgnoreCase(Integer numero);
 
-    boolean existsByNumeroIgnoreCaseAndIdNot(Double numero, Long id);
+    boolean existsByNumeroIgnoreCaseAndIdNot(Integer numero, Long id);
 }

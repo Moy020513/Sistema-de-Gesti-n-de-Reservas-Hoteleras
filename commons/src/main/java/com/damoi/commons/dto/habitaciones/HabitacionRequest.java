@@ -8,7 +8,7 @@ public record HabitacionRequest(
         @NotNull(message = "El número de habitación es obligatorio")
         @Min(value = 1, message = "El número de habitación debe ser mayor a 0")
         @Max(value = 999, message = "El número de habitación no puede exceder 999")
-        Double numero,
+        Integer numero,
 
         @NotBlank(message = "El tipo de habitación es obligatorio")
         @Size(max = 50, message = "El tipo de habitación no puede exceder 50 caracteres")

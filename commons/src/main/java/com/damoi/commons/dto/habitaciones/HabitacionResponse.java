@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public record HabitacionResponse(
         Long id,
-        Double numero,
+        Integer numero,
         String tipo,
         BigDecimal precio,
         Integer capacidad
