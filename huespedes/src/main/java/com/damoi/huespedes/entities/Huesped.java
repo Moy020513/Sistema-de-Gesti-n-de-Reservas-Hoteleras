@@ -69,6 +69,7 @@ public class Huesped {
     public void actualizarHuesped(String nombre, String apellidoPaterno, String apellidoMaterno, String email,
                    String telefono, String documento, String nacionalidad) {
         validarNoEliminado();
+        validarDatos(nombre, apellidoPaterno, apellidoMaterno, email, telefono, documento, nacionalidad);
 
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
