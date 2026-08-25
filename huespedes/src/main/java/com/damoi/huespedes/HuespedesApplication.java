@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication(scanBasePackages = {"com.damoi.commons"})
+@SpringBootApplication(scanBasePackages =  {"com.damoi.huespedes", "com.damoi.commons"})
 @Import(GlobalExceptionHandler.class)
 public class HuespedesApplication {
 

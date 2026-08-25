@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8091
 
 spring:
   application:
@@ -13,6 +13,12 @@ spring:
               uri: lb://habitaciones
               predicates:
                 - Path=/api/habitaciones/**
+              filters:
+                - StripPrefix=2
+            - id: huespedes
+              uri: lb://huespedes
+              predicates:
+                - Path=/api/huespedes/**
               filters:
                 - StripPrefix=2
     loadbalancer:

@@ -23,12 +23,14 @@ public class HuespedServiceImp implements HuespedService {
     private final HuespedMapper huespedMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<HuespedResponse> listar() {
         return huespedRepository.getByEstadoRegistro(EstadoRegistro.ACTIVO).stream()
                 .map(huespedMapper::entidadResponse).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HuespedResponse obtenerPorId(Long id) {
         return huespedMapper.entidadResponse(huespedRepository.getByEstadoRegistroAndId(EstadoRegistro.ACTIVO, id)
                 .orElseThrow(() ->
@@ -62,6 +64,7 @@ public class HuespedServiceImp implements HuespedService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HuespedResponse huespedSinEstado(Long id) {
         return huespedMapper.entidadResponse(huespedRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("No se encontró ningún huésped con el id ingresado...")));
