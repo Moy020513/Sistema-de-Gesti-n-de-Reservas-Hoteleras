@@ -20,6 +20,7 @@ public class HuespedMapper implements CommonMapper<HuespedRequest, HuespedRespon
                 .email(request.email().toLowerCase().trim())
                 .telefono(request.telefono().trim())
                 .documento(request.documento().trim())
+                .nacionalidad(request.nacionalidad().trim())
                 .estadoRegistro(EstadoRegistro.ACTIVO).build();
     }
 
@@ -28,6 +29,7 @@ public class HuespedMapper implements CommonMapper<HuespedRequest, HuespedRespon
         if(entidad == null) return null;
 
         return new HuespedResponse(
+                entidad.getId(),
                 String.join(" ", entidad.getNombre(),
                         entidad.getApellidoPaterno(), entidad.getApellidoMaterno()),
                 entidad.getEmail(),
