@@ -43,6 +43,7 @@ public class HabitacionServiceImpl implements HabitacionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HabitacionResponse obtenerHabitacionPorId(Long id) {
         return habitacionMapper.entidadResponse(
                 habitacionRepository.findById(id)
