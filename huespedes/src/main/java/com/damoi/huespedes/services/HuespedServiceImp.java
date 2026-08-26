@@ -60,7 +60,7 @@ public class HuespedServiceImp implements HuespedService {
         Huesped huesped = huespedRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("No se encontró ningún huésped con el id ingresado...")
         );
-        huespedRepository.delete(huesped);
+        huesped.eliminar();
     }
 
     @Override

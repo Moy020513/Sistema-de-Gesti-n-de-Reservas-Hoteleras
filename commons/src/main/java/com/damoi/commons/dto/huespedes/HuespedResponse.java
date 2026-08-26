@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record HuespedResponse(
+        Long id,
         String nombre,
         String email,
         String telefono,
