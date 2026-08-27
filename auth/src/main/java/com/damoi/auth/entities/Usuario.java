@@ -2,6 +2,8 @@ package com.damoi.auth.entities;
 
 import java.util.Set;
 
+import com.damoi.auth.enums.EstadoRegistro;
+import com.damoi.auth.utils.StringCustomUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,4 +45,16 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "ID_ROL")
     )
     private Set<Rol> roles;
+
+    @Column(name="ESTADO_REGISTRO", nullable = false)
+    private EstadoRegistro estadoRegistro;
+
+    public void validarPassword(String contraseña){
+        StringCustomUtils.validarTamanio(contraseña, 8, 20,
+                "Password es requerido y debe contener 8-20 caracteres");
+    }
+
+    public void actualizarPassword(String password){
+        this.password = password;
+    }
 }

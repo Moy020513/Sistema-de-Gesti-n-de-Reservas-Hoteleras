@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.damoi.auth.enums.EstadoRegistro;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,7 @@ public class UsuarioServiceImp implements UsuarioService {
     @Override
     public UsuarioResponse registrar(UsuarioRequest request) {
         log.info("Buscando usuario {}", request.username());
-        if (usuarioRepository.findByUsername(request.username()).isPresent()) {
+        if (usuarioRepository.existsByEstadoRegistroAndUsername(EstadoRegistro.ACTIVO, request.username())) {
             throw new IllegalArgumentException("El usuario " + request.username() + " ya está registrado");
         }
 
@@ -56,14 +57,28 @@ public class UsuarioServiceImp implements UsuarioService {
         Usuario usuario = usuarioMapper.requestToEntity(request,
                 passwordEncoder.encode(request.password()), roles);
 
-        usuario = usuarioRepository.save(usuario);
+        //usuario = usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
+        return usuarioMapper.entityToResponse(usuario);
+    }
+
+    @Override
+    public UsuarioResponse actualizar(UsuarioRequest request, String username) {
+        Usuario usuario = usuarioRepository.findByEstadoRegistroAndUsername(EstadoRegistro.ACTIVO,
+                request.username()).orElseThrow(() -> new IllegalArgumentException(
+                        "No se encontró usuario con el username proporcionado"));
+
+        usuario.validarPassword(request.password());
+        usuario.actualizarPassword(passwordEncoder.encode(request.password()));
+
         return usuarioMapper.entityToResponse(usuario);
     }
 
     @Override
     public UsuarioResponse eliminar(String username) {
-        Usuario usuario = usuarioRepository.findByUsername(username)
-                .orElseThrow(() -> new NoSuchElementException("No se encontró el usuario: " + username));
+        Usuario usuario = usuarioRepository.findByEstadoRegistroAndUsername(EstadoRegistro.ACTIVO,
+                        username).orElseThrow(() -> new NoSuchElementException(
+                                "No se encontró el usuario: " + username));
         usuarioRepository.delete(usuario);
         return usuarioMapper.entityToResponse(usuario);
     }

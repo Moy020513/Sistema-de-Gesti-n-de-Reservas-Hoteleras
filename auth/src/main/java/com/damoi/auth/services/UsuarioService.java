@@ -11,5 +11,7 @@ public interface UsuarioService {
 
     UsuarioResponse registrar(UsuarioRequest request);
 
+    UsuarioResponse actualizar(UsuarioRequest request, String username);
+
     UsuarioResponse eliminar(String username);
 }

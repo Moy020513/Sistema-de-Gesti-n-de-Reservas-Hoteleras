@@ -35,6 +35,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.registrar(request));
     }
 
+    public ResponseEntity<UsuarioResponse> actualizar(@Valid @RequestBody UsuarioRequest request,
+                                                      @PathVariable String username){
+        return ResponseEntity.ok(usuarioService.actualizar(request, username));
+    }
+
     @DeleteMapping("/{username}")
     public ResponseEntity<UsuarioResponse> eliminar(@PathVariable String username) {
         return ResponseEntity.ok(usuarioService.eliminar(username));
