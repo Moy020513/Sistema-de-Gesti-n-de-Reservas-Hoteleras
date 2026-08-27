@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/habitaciones/pom.xml" />
         <option value="$PROJECT_DIR$/usuarios/pom.xml" />
         <option value="$PROJECT_DIR$/auth/pom.xml" />
+        <option value="$PROJECT_DIR$/reservas/pom.xml" />
       </list>
     </option>
   </component>

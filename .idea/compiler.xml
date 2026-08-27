@@ -11,6 +11,7 @@
         <module name="habitaciones" />
         <module name="eureka" />
         <module name="gateway" />
+        <module name="reservas" />
       </profile>
       <profile name="Annotation profile for commons" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -44,6 +45,7 @@
       <module name="gateway" options="-parameters" />
       <module name="habitaciones" options="-parameters" />
       <module name="huespedes" options="-parameters" />
+      <module name="reservas" options="-parameters" />
       <module name="usuarios" options="-parameters" />
     </option>
   </component>
