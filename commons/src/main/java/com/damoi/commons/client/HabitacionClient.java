@@ -1,0 +1,24 @@
+package com.damoi.commons.client;
+
+import com.damoi.commons.dto.habitaciones.HabitacionResponse;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
+@FeignClient(name = "habitaciones")
+public interface HabitacionClient {
+
+    @GetMapping("/{id}")
+    HabitacionResponse obtenerHabitacionActivaPorId(@PathVariable Long id);
+
+    @GetMapping("/id-habitacion/{id}")
+    HabitacionResponse obtenerHabitacionPorIdSinEstado(@PathVariable Long id);
+
+    @PutMapping("/{idHabitacion}/disponibilidad/{idDisponibilidad}")
+    void actualizarDisponibilidadHabitacion(
+            @PathVariable Long idHabitacion,
+            @PathVariable Long idDisponibilidad
+    );
+}
