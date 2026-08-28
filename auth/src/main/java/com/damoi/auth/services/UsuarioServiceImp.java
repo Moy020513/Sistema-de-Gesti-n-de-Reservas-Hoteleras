@@ -27,18 +27,15 @@ import lombok.extern.slf4j.Slf4j;
 public class UsuarioServiceImp implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
     private final RolRepository rolRepository;
-
     private final UsuarioMapper usuarioMapper;
-
     private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
     public Set<UsuarioResponse> listar() {
         log.info("Listado de todos los usuarios solicitado");
-        return usuarioRepository.findAll().stream()
+        return usuarioRepository.findByEstadoRegistro(EstadoRegistro.ACTIVO).stream()
                 .map(usuarioMapper::entityToResponse).collect(Collectors.toSet());
     }
 
@@ -75,11 +72,10 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponse eliminar(String username) {
+    public void eliminar(String username) {
         Usuario usuario = usuarioRepository.findByEstadoRegistroAndUsername(EstadoRegistro.ACTIVO,
                         username).orElseThrow(() -> new NoSuchElementException(
                                 "No se encontró el usuario: " + username));
-        usuarioRepository.delete(usuario);
-        return usuarioMapper.entityToResponse(usuario);
+        usuario.eliminadoLogico();
     }
 }
