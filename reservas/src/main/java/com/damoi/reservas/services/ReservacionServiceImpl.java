@@ -109,12 +109,16 @@ public class ReservacionServiceImpl implements ReservacionService{
 
     @Override
     public Boolean ReservacionesActivasHuesped(Long idHuesped) {
-        return null;
+        return reservacionRepository.existsByIdHuespedAndEstadoRegistroAndEstadoReservacion(
+                idHuesped, EstadoRegistro.ACTIVO, EstadoReserva.CONFIRMADA
+        );
     }
 
     @Override
     public Boolean ReservacionesActivasHabitacion(Long idHabitacion) {
-        return null;
+        return reservacionRepository.existsByIdHabitacionAndEstadoRegistroAndEstadoReservacion(
+                idHabitacion, EstadoRegistro.ACTIVO, EstadoReserva.CONFIRMADA
+        );
     }
 
     private Reservacion obtenerReservacionOException(Long id) {

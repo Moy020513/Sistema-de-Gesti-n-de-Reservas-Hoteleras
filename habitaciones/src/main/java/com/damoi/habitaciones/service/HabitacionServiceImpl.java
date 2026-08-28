@@ -1,6 +1,7 @@
 package com.damoi.habitaciones.service;
 
 
+import com.damoi.commons.client.HabitacionClient;
 import com.damoi.commons.dto.habitaciones.HabitacionRequest;
 import com.damoi.commons.dto.habitaciones.HabitacionResponse;
 import com.damoi.commons.enums.EstadoHabitacion;
@@ -26,6 +27,7 @@ public class HabitacionServiceImpl implements HabitacionService {
     private final HabitacionRepository habitacionRepository;
 
     private final HabitacionMapper habitacionMapper;
+    private final HabitacionClient habitacionClient;
 
 
     @Override
