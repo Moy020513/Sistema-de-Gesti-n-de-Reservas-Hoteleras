@@ -3,6 +3,7 @@ package com.damoi.auth.mapper;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.damoi.auth.enums.EstadoRegistro;
 import org.springframework.stereotype.Component;
 
 import com.damoi.auth.dto.UsuarioRequest;
@@ -29,6 +30,7 @@ public class UsuarioMapper {
         usuario.setUsername(request.username());
         usuario.setPassword(password);
         usuario.setRoles(roles);
+        usuario.setEstadoRegistro(EstadoRegistro.ACTIVO);
         return usuario;
     }
 }

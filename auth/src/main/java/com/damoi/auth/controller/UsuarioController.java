@@ -3,13 +3,7 @@ package com.damoi.auth.controller;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.damoi.auth.dto.UsuarioRequest;
 import com.damoi.auth.dto.UsuarioResponse;
@@ -34,9 +28,14 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponse> registrar(@Valid @RequestBody UsuarioRequest request) {
         return ResponseEntity.ok(usuarioService.registrar(request));
     }
+    @PutMapping("/{username}")
+    public ResponseEntity<UsuarioResponse> actualizar(@Valid @RequestBody UsuarioRequest request,
+                                                      @PathVariable String username){
+        return ResponseEntity.ok(usuarioService.actualizar(request, username));
+    }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<UsuarioResponse> eliminar(@PathVariable String username) {
-        return ResponseEntity.ok(usuarioService.eliminar(username));
+    public ResponseEntity<Void> eliminar(@PathVariable String username) {
+        return ResponseEntity.noContent().build();
     }
 }
