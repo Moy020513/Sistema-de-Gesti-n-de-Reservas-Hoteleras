@@ -3,6 +3,7 @@ package com.damoi.habitaciones.service;
 
 import com.damoi.commons.dto.habitaciones.HabitacionRequest;
 import com.damoi.commons.dto.habitaciones.HabitacionResponse;
+import com.damoi.commons.enums.EstadoHabitacion;
 import com.damoi.commons.enums.EstadoRegistro;
 import com.damoi.commons.exceptions.RecursoNoEncontradoException;
 import com.damoi.habitaciones.entity.Habitacion;
@@ -91,6 +92,12 @@ public class HabitacionServiceImpl implements HabitacionService {
         habitacion.setEstatusEliminado();
         log.info("Paciente con id {} eliminado correctamente", habitacion.getId());
 
+    }
+
+    @Override
+    public boolean buscarHabitacionDisponible(Long id) {
+        return habitacionRepository.existsByEstadoInicialAndEstadoRegistroAndId(
+                EstadoHabitacion.DISPONIBLE, EstadoRegistro.ACTIVO, id);
     }
 
     private Habitacion obtenerHabitacionActiva(Long id) {

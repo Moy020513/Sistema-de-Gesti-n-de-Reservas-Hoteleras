@@ -1,6 +1,7 @@
 package com.damoi.reservas.entities;
 
 
+import com.damoi.commons.enums.EstadoHabitacion;
 import com.damoi.commons.enums.EstadoRegistro;
 import com.damoi.commons.enums.EstadoReserva;
 import com.damoi.commons.utils.StringCustomUtils;
@@ -11,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -21,8 +23,6 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class Reservacion {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_RESERVA")
@@ -33,8 +33,11 @@ public class Reservacion {
     @Column(name = "ID_HABITACION", nullable = false)
     private Long idHabitacion;
 
-    @Column(name = "FECHA_HORA", nullable = false)
-    private LocalDateTime fechaHora;
+    @Column(name = "FECHA_INICIO", nullable = false)
+    private LocalDateTime fechaEntrada;
+
+    @Column(name = "FECHA_FIN", nullable = false)
+    private LocalDateTime fechaSalida;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ESTADO_INICIAL", length = 20, nullable = false)
@@ -58,28 +61,48 @@ public class Reservacion {
     }
 
     public static void validarDatos(
-            Long idHuesped, Long idHabitacion,
-            LocalDateTime fechaHora) {
+            LocalDateTime fechaEntrada, LocalDateTime fechaSalida) {
 
-        validarId(idHuesped, "huesped");
-
-        validarId(idHabitacion, "habitación");
-
-        validarFecha(fechaHora);
+        validarFecha(fechaEntrada);
+        validarFecha(fechaSalida);
     }
 
     public static Reservacion crear(
             Long idHuesped, Long idHabitacion,
-            LocalDateTime fechaHora) {
-        validarDatos(idHuesped, idHabitacion, fechaHora);
+            LocalDateTime fechaEntrada, LocalDateTime fechaSalida) {
+        validarDatos(fechaEntrada, fechaSalida);
 
         return Reservacion.builder()
                 .idHuesped(idHuesped)
                 .idHabitacion(idHabitacion)
-                .fechaHora(fechaHora)
+                .fechaEntrada(fechaEntrada)
+                .fechaSalida(fechaSalida)
                 .estadoReserva(EstadoReserva.CONFIRMADA)
                 .estadoRegistro(EstadoRegistro.ACTIVO)
                 .build();
     }
 
+    public void actualizar(LocalDateTime fechaEntrada, LocalDateTime fechaSalida) {
+        validarDatos( fechaEntrada, fechaSalida);
+
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+    }
+    public void actualizarPostCheckIn(LocalDateTime fechaSalida) {
+
+        this.fechaSalida = fechaSalida;
+    }
+    private void validarNoEliminado(){
+        if (this.getEstadoRegistro() == EstadoRegistro.ELIMINADO)
+            throw new IllegalArgumentException("Reservacion ya fue eliminada");
+    }
+
+    public void eliminar(){
+        validarNoEliminado();
+        this.estadoRegistro = EstadoRegistro.ELIMINADO;
+    }
+
+    public void checkInCheckOut(EstadoReserva estadoReserva){
+        this.estadoReserva = estadoReserva;
+    }
 }

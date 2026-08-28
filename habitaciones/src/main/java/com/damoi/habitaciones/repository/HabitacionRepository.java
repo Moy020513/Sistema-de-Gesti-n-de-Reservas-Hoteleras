@@ -1,6 +1,8 @@
 package com.damoi.habitaciones.repository;
 
+import com.damoi.commons.enums.EstadoHabitacion;
 import com.damoi.commons.enums.EstadoRegistro;
+import com.damoi.commons.enums.EstadoReserva;
 import com.damoi.habitaciones.entity.Habitacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,4 +18,6 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
     boolean existsByNumeroIgnoreCase(Integer numero);
 
     boolean existsByNumeroIgnoreCaseAndIdNot(Integer numero, Long id);
+
+    boolean existsByEstadoInicialAndEstadoRegistroAndId(EstadoHabitacion estado, EstadoRegistro registro, Long id);
 }

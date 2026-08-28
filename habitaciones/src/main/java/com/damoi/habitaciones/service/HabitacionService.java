@@ -8,5 +8,5 @@ public interface HabitacionService extends CrudService<HabitacionRequest, Habita
 
     HabitacionResponse obtenerHabitacionPorId(Long id);
     void eliminar(Long id);
-
+    boolean buscarHabitacionDisponible(Long id);
 }

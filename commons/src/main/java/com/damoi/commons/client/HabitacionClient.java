@@ -21,4 +21,7 @@ public interface HabitacionClient {
             @PathVariable Long idHabitacion,
             @PathVariable Long idDisponibilidad
     );
+
+    @GetMapping("/habitacion-disponible/{id}")
+    boolean validarHabitacionDisponible(@PathVariable Long id);
 }

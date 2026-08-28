@@ -26,4 +26,9 @@ public class HabitacionController extends CommonController<HabitacionRequest, Ha
             @PathVariable @Positive(message = "El ID debe ser positivo") Long id){
         return ResponseEntity.ok(service.obtenerHabitacionPorId(id));
     }
+
+    @GetMapping("/habitacion-disponible/{id}")
+    public ResponseEntity<Boolean> buscarHabitacionDisponible(@PathVariable Long id){
+        return ResponseEntity.ok(service.buscarHabitacionDisponible(id));
+    }
 }
