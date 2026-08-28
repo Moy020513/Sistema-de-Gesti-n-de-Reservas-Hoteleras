@@ -40,7 +40,7 @@ public class Reservacion {
     private LocalDateTime fechaSalida;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "ESTADO_INICIAL", length = 20, nullable = false)
+    @Column(name = "ESTADO_INICIO", length = 20, nullable = false)
     private EstadoReserva estadoReserva;
 
     @Enumerated(EnumType.STRING)
