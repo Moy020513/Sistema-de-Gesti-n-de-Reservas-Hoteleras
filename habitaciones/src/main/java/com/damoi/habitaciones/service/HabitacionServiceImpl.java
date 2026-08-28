@@ -116,15 +116,20 @@ public class HabitacionServiceImpl implements HabitacionService {
 
     private void validarDatosUnicos(HabitacionRequest request) {
         log.info("Validando habitación única...");
-        if (habitacionRepository.existsByNumeroIgnoreCase(request.numero())) {
+        if (habitacionRepository.existsByNumero(request.numero())) {
             throw new IllegalArgumentException("Ya existe una habitación registrada con el número: "
                     + request.numero());
         }
     }
+    @Override
+    public void actualizarEstadoHabitacion(Long idHabitacion, Long idEstadoHabitacion){
+        Habitacion habitacion = obtenerHabitacionActiva(idHabitacion);
+        habitacion.cambiarEstadoHabitacion(EstadoHabitacion.obtenerEstadoHabitacionPorCodigo(idEstadoHabitacion));
+    }
 
     private void validarCambiosUnicos(HabitacionRequest request, Long id) {
         log.info("Validando habitación única...");
-        if (habitacionRepository.existsByNumeroIgnoreCaseAndIdNot(request.numero(), id)) {
+        if (habitacionRepository.existsByNumeroAndIdNot(request.numero(), id)) {
             throw new IllegalArgumentException("Ya existe una habitación registrada con el número: "
                     + request.numero());
         }

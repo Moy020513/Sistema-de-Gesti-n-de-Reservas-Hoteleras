@@ -12,7 +12,7 @@ public interface HuespedClient {
     @GetMapping("/{id}")
     HuespedResponse obtenerHuespedActivoPorId(@PathVariable Long id);
 
-    @GetMapping("/id-paciente/{id}")
+    @GetMapping("/id-huesped/{id}")
     HuespedResponse obtenerHuespedSinEstadoPorId(@PathVariable Long id);
 
 

@@ -78,4 +78,7 @@ public class Habitacion {
         estadoRegistro = EstadoRegistro.ELIMINADO;
     }
 
+    public void cambiarEstadoHabitacion(EstadoHabitacion estado){
+        this.estadoInicial = estado;
+    }
 }

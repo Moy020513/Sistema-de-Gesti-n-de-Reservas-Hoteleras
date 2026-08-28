@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +27,15 @@ public class HabitacionController extends CommonController<HabitacionRequest, Ha
             @PathVariable @Positive(message = "El ID debe ser positivo") Long id){
         return ResponseEntity.ok(service.obtenerHabitacionPorId(id));
     }
+
+    @PutMapping("/{idHabitacion}/disponibilidad/{idDisponibilidad}")
+    public ResponseEntity<Void> actualizarDisponibilidadHabitacion(
+            @PathVariable Long idHabitacion,
+            @PathVariable Long idDisponibilidad
+    ){
+        service.actualizarEstadoHabitacion(idHabitacion, idDisponibilidad);
+        return ResponseEntity.noContent().build();
+}
 
     @GetMapping("/habitacion-disponible/{id}")
     public ResponseEntity<Boolean> buscarHabitacionDisponible(@PathVariable Long id){
