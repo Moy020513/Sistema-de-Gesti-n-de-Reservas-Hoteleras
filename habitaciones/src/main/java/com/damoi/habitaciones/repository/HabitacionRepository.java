@@ -18,6 +18,7 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
 
     List<Habitacion> findByEstadoRegistro(EstadoRegistro estadoRegistro);
 
+
     boolean existsByNumero(Integer numero);
 
     boolean existsByNumeroAndIdNot(Integer numero, Long id);
