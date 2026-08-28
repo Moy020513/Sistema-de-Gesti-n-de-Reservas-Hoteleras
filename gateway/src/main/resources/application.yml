@@ -26,8 +26,8 @@ spring:
                 - Path=/api/huespedes/**
               filters:
                 - StripPrefix=2
-            - id: reservaciones
-              uri: lb://reservaciones
+            - id: reservas
+              uri: lb://reservas
               predicates:
                 - Path=/api/reservaciones/**
               filters:
