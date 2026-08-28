@@ -1,5 +1,6 @@
 package com.damoi.huespedes.services;
 
+import com.damoi.commons.client.ReservacionClient;
 import com.damoi.commons.dto.huespedes.HuespedRequest;
 import com.damoi.commons.dto.huespedes.HuespedResponse;
 import com.damoi.commons.enums.EstadoRegistro;
@@ -19,6 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class HuespedServiceImp implements HuespedService {
+
+    private final ReservacionClient reservacionClient;
     private final HuespedRepository huespedRepository;
     private final HuespedMapper huespedMapper;
 
@@ -56,6 +59,9 @@ public class HuespedServiceImp implements HuespedService {
     @Override
     public void eliminar(Long id) {
         Huesped huesped = obtenerHuesped(id);
+
+        if(reservacionClient.validarReservacionPorHuesped(huesped.getId()))
+            throw new IllegalStateException("No se puede eliminar, tiene una reservacion asociada");
 
         huesped.eliminar();
     }

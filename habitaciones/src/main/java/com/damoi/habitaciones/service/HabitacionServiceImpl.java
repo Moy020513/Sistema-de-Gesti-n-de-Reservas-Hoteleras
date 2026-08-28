@@ -2,6 +2,7 @@ package com.damoi.habitaciones.service;
 
 
 import com.damoi.commons.client.HabitacionClient;
+import com.damoi.commons.client.ReservacionClient;
 import com.damoi.commons.dto.habitaciones.HabitacionRequest;
 import com.damoi.commons.dto.habitaciones.HabitacionResponse;
 import com.damoi.commons.enums.EstadoHabitacion;
@@ -24,6 +25,7 @@ import java.util.List;
 public class HabitacionServiceImpl implements HabitacionService {
 
 
+    private final ReservacionClient reservacionClient;
     private final HabitacionRepository habitacionRepository;
 
     private final HabitacionMapper habitacionMapper;
@@ -90,6 +92,10 @@ public class HabitacionServiceImpl implements HabitacionService {
 
         Habitacion habitacion = obtenerHabitacionActiva(id);
         log.info("Eliminando habitación con id: {}", id);
+
+        if(reservacionClient.validarReservacionPorHabitacion(habitacion.getId()))
+            throw new IllegalStateException("No se puede eliminar, tiene una reservacion asociada");
+
 
         habitacion.setEstatusEliminado();
         log.info("Paciente con id {} eliminado correctamente", habitacion.getId());

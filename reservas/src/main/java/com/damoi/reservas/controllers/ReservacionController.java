@@ -20,15 +20,15 @@ public class ReservacionController extends CommonController<ReservacionRequest, 
     public ReservacionController(ReservacionService service) {
         super(service);
     }
-    @GetMapping("/id-habitacion/{id}")
-    public ResponseEntity<HabitacionResponse> obtenerHabitacionPorIdSinEstado(
+    @GetMapping("/id-reservacion-huesped/{id}")
+    public ResponseEntity<Boolean> validarReservacionPorHuesped(
             @PathVariable @Positive(message = "El ID debe ser positivo") Long id){
-        return ResponseEntity.ok(service.obtenerReservacionPorId(id));
+        return ResponseEntity.ok(service.ReservacionesActivasHuesped(id));
     }
 
-    @GetMapping("/habitacion-disponible/{id}")
-    public ResponseEntity<Boolean> buscarHabitacionDisponible(@PathVariable Long id){
-        return ResponseEntity.ok(service.buscarReservacionDisponible(id));
+    @GetMapping("/id-reservacion-habitacion/{id}")
+    public ResponseEntity<Boolean> validarReservacionPorHabitacion(@PathVariable Long id){
+        return ResponseEntity.ok(service.ReservacionesActivasHabitacion(id));
     }
 
 }
