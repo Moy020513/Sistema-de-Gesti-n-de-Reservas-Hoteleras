@@ -28,8 +28,8 @@ public class ReservacionController extends CommonController<ReservacionRequest, 
     }
 
     @PutMapping("{idReservacion}/estado/{idEstadoReservacion}")
-    public ResponseEntity<Void> actualizarEstadoReserva(@PathVariable Long idReservacion, @PathVariable Long idEstadoRegistro){
-        service.actualizarEstadoReservacion(idReservacion, idEstadoRegistro);
+    public ResponseEntity<Void> actualizarEstadoReserva(@PathVariable Long idReservacion, @PathVariable Long idEstadoReservacion){
+        service.actualizarEstadoReservacion(idReservacion, idEstadoReservacion);
         return ResponseEntity.noContent().build();
     }
 
