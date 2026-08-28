@@ -20,8 +20,8 @@ public class ReservacionMapper implements CommonMapper<ReservacionRequest, Reser
         return Reservacion.crear(
                 request.idHuesped(),
                 request.idHabitacion(),
-                request.fechaHora()
-                
+                request.fechaHora(),
+                request.fechaSalida()
         );
     }
 

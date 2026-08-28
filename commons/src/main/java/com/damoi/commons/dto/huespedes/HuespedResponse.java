@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 public record HuespedResponse(
         Long id,
         String nombre,
+        String paterno,
+        String materno,
         String email,
         String telefono,
         String documento,

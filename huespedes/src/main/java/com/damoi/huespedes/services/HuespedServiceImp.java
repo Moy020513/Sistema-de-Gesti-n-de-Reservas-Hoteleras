@@ -32,14 +32,13 @@ public class HuespedServiceImp implements HuespedService {
     @Override
     @Transactional(readOnly = true)
     public HuespedResponse obtenerPorId(Long id) {
-        return huespedMapper.entidadResponse(huespedRepository.getByEstadoRegistroAndId(EstadoRegistro.ACTIVO, id)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("No se encontró ningún huésped con el id ingresado...")));
+        return huespedMapper.entidadResponse(obtenerHuesped(id));
     }
 
     @Override
     public HuespedResponse registrar(HuespedRequest request) {
         Huesped huesped = huespedMapper.requestAEntidad(request);
+        validarDatosParaInsercion(request);
         huespedRepository.save(huesped);
 
         return huespedMapper.entidadResponse(huesped);
@@ -47,9 +46,8 @@ public class HuespedServiceImp implements HuespedService {
 
     @Override
     public HuespedResponse actualizar(HuespedRequest request, Long id) {
-        Huesped huesped = huespedRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("No se encontró ningún huésped con el id ingresado...")
-        );
+        Huesped huesped = obtenerHuesped(id);
+        validarDatosParaActualizacion(request, id);
         huesped.actualizarHuesped(request.nombre(), request.apellidoPaterno(), request.apellidoMaterno(),
                 request.email(), request.telefono(), request.documento(), request.nacionalidad());
         return huespedMapper.entidadResponse(huesped);
@@ -57,9 +55,8 @@ public class HuespedServiceImp implements HuespedService {
 
     @Override
     public void eliminar(Long id) {
-        Huesped huesped = huespedRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("No se encontró ningún huésped con el id ingresado...")
-        );
+        Huesped huesped = obtenerHuesped(id);
+
         huesped.eliminar();
     }
 
@@ -69,4 +66,31 @@ public class HuespedServiceImp implements HuespedService {
         return huespedMapper.entidadResponse(huespedRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("No se encontró ningún huésped con el id ingresado...")));
     }
+
+    private Huesped obtenerHuesped(Long id){
+        return huespedRepository.getByEstadoRegistroAndId(EstadoRegistro.ACTIVO, id)
+                .orElseThrow(()-> new IllegalArgumentException("No se encontró ningún huésped con el id ingresado..."));
+    }
+
+    private void validarDatosParaInsercion(HuespedRequest request){
+        if (huespedRepository.existsByEmailIgnoreCaseAndEstadoRegistro(request.email(), EstadoRegistro.ACTIVO))
+            throw new IllegalArgumentException("Ya existe un huesped con el email ingresado");
+        if (huespedRepository.existsByTelefonoAndEstadoRegistro(request.telefono(), EstadoRegistro.ACTIVO))
+            throw new IllegalArgumentException("Ya existe un huesped con el telefono ingresado");
+        if (huespedRepository.existsByDocumentoIgnoreCaseAndEstadoRegistro(request.documento(), EstadoRegistro.ACTIVO))
+            throw new IllegalArgumentException("Ya existe un huesped con el numero de documento ingresado");
+    }
+
+    private void validarDatosParaActualizacion(HuespedRequest request, Long id){
+        if (huespedRepository.existsByEmailIgnoreCaseAndEstadoRegistroAndIdNot(request.email(),
+                EstadoRegistro.ACTIVO, id))
+            throw new IllegalArgumentException("Ya existe un huesped con el email ingresado");
+        if (huespedRepository.existsByTelefonoAndEstadoRegistroAndIdNot(request.telefono(),
+                EstadoRegistro.ACTIVO, id))
+            throw new IllegalArgumentException("Ya existe un huesped con el telefono ingresado");
+        if (huespedRepository.existsByDocumentoIgnoreCaseAndEstadoRegistroAndIdNot(request.documento(),
+                EstadoRegistro.ACTIVO, id))
+            throw new IllegalArgumentException("Ya existe un huesped con el numero de documento ingresado");
+    }
+
 }
