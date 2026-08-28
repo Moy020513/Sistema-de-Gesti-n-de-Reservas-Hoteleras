@@ -14,6 +14,7 @@ public record ReservacionResponse(
         DatosHabitacion habitacion,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime fechaHora,
+        LocalDateTime fechaSalida,
         String estadoReserva
 ) {
 }

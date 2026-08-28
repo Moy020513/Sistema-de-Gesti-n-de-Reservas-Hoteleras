@@ -35,7 +35,8 @@ public class ReservacionMapper implements CommonMapper<ReservacionRequest, Reser
                 entidad.getId(),
                 null,
                 null,
-                entidad.getFechaHora(),
+                entidad.getFechaEntrada(),
+                entidad.getFechaSalida(),
                 entidad.getEstadoReserva().getDescripcion()
         );
     }
@@ -47,7 +48,8 @@ public class ReservacionMapper implements CommonMapper<ReservacionRequest, Reser
                 entidad.getId(),
                 reservacionResponseADatosHuesped(huesped),
                 habitacionResponseADatosHabitacion(habitacion),
-                entidad.getFechaHora(),
+                entidad.getFechaEntrada(),
+                entidad.getFechaSalida(),
                 entidad.getEstadoReserva().getDescripcion()
         );
     }
