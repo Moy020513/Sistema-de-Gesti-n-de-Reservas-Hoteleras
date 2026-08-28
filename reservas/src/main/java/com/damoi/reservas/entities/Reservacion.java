@@ -105,4 +105,8 @@ public class Reservacion {
     public void checkInCheckOut(EstadoReserva estadoReserva){
         this.estadoReserva = estadoReserva;
     }
+
+    public void actualizarEstadoReserva(EstadoReserva estado){
+        this.estadoReserva = estado;
+    }
 }
